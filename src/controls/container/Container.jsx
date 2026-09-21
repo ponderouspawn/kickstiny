@@ -5,7 +5,7 @@ import { usePlaybackControl } from "../play/usePlaybackControl.js";
 import { usePreferences } from "../usePreferences.js";
 import { useVolumeControl } from "../volume/useVolumeControl.js";
 
-export default function Container({ core, videoContainer }) {
+export default function Container({ core, videoContainer, videoElement }) {
   const containerRef = useRef(null);
   const barRef = useRef(null);
   const { shouldShow, showControls } = useControlsVisibility(
@@ -16,6 +16,13 @@ export default function Container({ core, videoContainer }) {
   const { volume, isMuted, handleVolumeChange, handleMuteToggle } =
     useVolumeControl(core);
   const { clickToPlayPause, setClickToPlayPause } = usePreferences();
+  const {
+    volume,
+    isMuted,
+    handleVolumeChange,
+    handleVolumeScroll,
+    handleMuteToggle,
+  } = useVolumeControl(core);
 
   const handleContainerClick = (e) => {
     const isInControlsBar = barRef.current?.contains(e.target);
@@ -43,10 +50,12 @@ export default function Container({ core, videoContainer }) {
       className="kickstiny-container"
       onClick={handleContainerClick}
       onAuxClick={handleContainerAuxClick}
+      onWheel={handleVolumeScroll}
     >
       <ControlsBar
         core={core}
         videoContainer={videoContainer}
+        videoElement={videoElement}
         shouldShow={shouldShow}
         barRef={barRef}
         isPlaying={isPlaying}
@@ -58,6 +67,11 @@ export default function Container({ core, videoContainer }) {
         showControls={showControls}
         clickToPlayPause={clickToPlayPause}
         onClickToPlayChange={setClickToPlayPause}
+        volume={volume}
+        isMuted={isMuted}
+        handleVolumeChange={handleVolumeChange}
+        handleVolumeScroll={handleVolumeScroll}
+        handleMuteToggle={handleMuteToggle}
       />
     </div>
   );

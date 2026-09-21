@@ -14,6 +14,7 @@ import ChannelInfo from "../info/ChannelInfo.jsx";
 export default function ControlsBar({
   core,
   videoContainer,
+  videoElement,
   shouldShow,
   barRef,
   isPlaying,
@@ -25,9 +26,16 @@ export default function ControlsBar({
   showControls,
   clickToPlayPause,
   onClickToPlayChange,
+  volume,
+  isMuted,
+  handleVolumeChange,
+  handleVolumeScroll,
+  handleMuteToggle,
 }) {
-  const { isFullscreen, handleFullscreenToggle } =
-    useFullscreenControl(videoContainer);
+  const { isFullscreen, handleFullscreenToggle } = useFullscreenControl(
+    videoContainer,
+    videoElement,
+  );
   const { username, viewerCount, uptime } = useChannelInfo();
 
   useKeyboardControls({
@@ -46,6 +54,7 @@ export default function ControlsBar({
     >
       <div
         ref={barRef}
+        onWheel={(event) => event.stopPropagation()}
         className={clsx("controls-bar", !shouldShow && "controls-bar--hidden")}
       >
         <div className="controls-bar__left">
@@ -57,8 +66,9 @@ export default function ControlsBar({
           <VolumeControls
             volume={volume}
             isMuted={isMuted}
-            onVolumeChange={onVolumeChange}
-            onMuteToggle={onMuteToggle}
+            onVolumeChange={handleVolumeChange}
+            onVolumeScroll={handleVolumeScroll}
+            onMuteToggle={handleMuteToggle}
           />
         </div>
 
