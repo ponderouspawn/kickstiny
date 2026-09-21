@@ -13,8 +13,6 @@ export default function Container({ core, videoContainer, videoElement }) {
     barRef,
   );
   const { isPlaying, handlePlayPause } = usePlaybackControl(core);
-  const { volume, isMuted, handleVolumeChange, handleMuteToggle } =
-    useVolumeControl(core);
   const { clickToPlayPause, setClickToPlayPause } = usePreferences();
   const {
     volume,
@@ -67,8 +65,6 @@ export default function Container({ core, videoContainer, videoElement }) {
         showControls={showControls}
         clickToPlayPause={clickToPlayPause}
         onClickToPlayChange={setClickToPlayPause}
-        volume={volume}
-        isMuted={isMuted}
         handleVolumeChange={handleVolumeChange}
         handleVolumeScroll={handleVolumeScroll}
         handleMuteToggle={handleMuteToggle}
