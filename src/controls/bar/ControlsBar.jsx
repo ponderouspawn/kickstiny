@@ -19,7 +19,6 @@ export default function ControlsBar({
   barRef,
   isPlaying,
   handlePlayPause,
-  onMuteToggle,
   showControls,
   clickToPlayPause,
   onClickToPlayChange,
@@ -37,7 +36,7 @@ export default function ControlsBar({
 
   useKeyboardControls({
     onPlayPause: handlePlayPause,
-    onMuteToggle,
+    onMuteToggle: handleMuteToggle,
     onFullscreenToggle: handleFullscreenToggle,
     container: videoContainer,
     showControls,
