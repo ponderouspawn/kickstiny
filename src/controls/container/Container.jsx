@@ -58,13 +58,11 @@ export default function Container({ core, videoContainer, videoElement }) {
         barRef={barRef}
         isPlaying={isPlaying}
         handlePlayPause={handlePlayPause}
-        volume={volume}
-        isMuted={isMuted}
-        onVolumeChange={handleVolumeChange}
-        onMuteToggle={handleMuteToggle}
         showControls={showControls}
         clickToPlayPause={clickToPlayPause}
         onClickToPlayChange={setClickToPlayPause}
+        volume={volume}
+        isMuted={isMuted}
         handleVolumeChange={handleVolumeChange}
         handleVolumeScroll={handleVolumeScroll}
         handleMuteToggle={handleMuteToggle}
