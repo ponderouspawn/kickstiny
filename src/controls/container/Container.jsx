@@ -3,6 +3,7 @@ import ControlsBar from "../bar/ControlsBar.jsx";
 import { useControlsVisibility } from "./useControlsVisibility.js";
 import { usePlaybackControl } from "../play/usePlaybackControl.js";
 import { usePreferences } from "../usePreferences.js";
+import { useVolumeControl } from "../volume/useVolumeControl.js";
 
 export default function Container({ core, videoContainer }) {
   const containerRef = useRef(null);
@@ -12,6 +13,8 @@ export default function Container({ core, videoContainer }) {
     barRef,
   );
   const { isPlaying, handlePlayPause } = usePlaybackControl(core);
+  const { volume, isMuted, handleVolumeChange, handleMuteToggle } =
+    useVolumeControl(core);
   const { clickToPlayPause, setClickToPlayPause } = usePreferences();
 
   const handleContainerClick = (e) => {
@@ -24,11 +27,22 @@ export default function Container({ core, videoContainer }) {
     }
   };
 
+  const handleContainerAuxClick = (e) => {
+    if (e.button !== 1 || barRef.current?.contains(e.target)) {
+      return;
+    }
+
+    e.preventDefault();
+    handleMuteToggle();
+    showControls();
+  };
+
   return (
     <div
       ref={containerRef}
       className="kickstiny-container"
       onClick={handleContainerClick}
+      onAuxClick={handleContainerAuxClick}
     >
       <ControlsBar
         core={core}
@@ -37,6 +51,10 @@ export default function Container({ core, videoContainer }) {
         barRef={barRef}
         isPlaying={isPlaying}
         handlePlayPause={handlePlayPause}
+        volume={volume}
+        isMuted={isMuted}
+        onVolumeChange={handleVolumeChange}
+        onMuteToggle={handleMuteToggle}
         showControls={showControls}
         clickToPlayPause={clickToPlayPause}
         onClickToPlayChange={setClickToPlayPause}

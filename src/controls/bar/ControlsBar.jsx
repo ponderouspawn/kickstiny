@@ -1,7 +1,6 @@
 import React from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
-import { useVolumeControl } from "../volume/useVolumeControl.js";
 import { useFullscreenControl } from "../fullscreen/useFullscreenControl.js";
 import { useChannelInfo } from "../info/useChannelInfo.js";
 import { useKeyboardControls } from "./useKeyboardControls.js";
@@ -19,19 +18,21 @@ export default function ControlsBar({
   barRef,
   isPlaying,
   handlePlayPause,
+  volume,
+  isMuted,
+  onVolumeChange,
+  onMuteToggle,
   showControls,
   clickToPlayPause,
   onClickToPlayChange,
 }) {
-  const { volume, isMuted, handleVolumeChange, handleMuteToggle } =
-    useVolumeControl(core);
   const { isFullscreen, handleFullscreenToggle } =
     useFullscreenControl(videoContainer);
   const { username, viewerCount, uptime } = useChannelInfo();
 
   useKeyboardControls({
     onPlayPause: handlePlayPause,
-    onMuteToggle: handleMuteToggle,
+    onMuteToggle,
     onFullscreenToggle: handleFullscreenToggle,
     container: videoContainer,
     showControls,
@@ -56,8 +57,8 @@ export default function ControlsBar({
           <VolumeControls
             volume={volume}
             isMuted={isMuted}
-            onVolumeChange={handleVolumeChange}
-            onMuteToggle={handleMuteToggle}
+            onVolumeChange={onVolumeChange}
+            onMuteToggle={onMuteToggle}
           />
         </div>
 
